@@ -1,0 +1,179 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    name: Change detection
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    outputs:
+      code: ${{ steps.classify.outputs.code }}
+      docker: ${{ steps.classify.outputs.docker }}
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          fetch-depth: 0
+      - id: classify
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="${{ github.event.before }}"
+          head="${{ github.sha }}"
+          if [[ -z "$base" || "$base" == "0000000000000000000000000000000000000000" ]]; then
+            base="$(git rev-parse "$head^" 2>/dev/null || true)"
+          fi
+          changed="$(git diff --name-only "$base" "$head" 2>/dev/null || git diff --name-only HEAD^ HEAD)"
+          printf '%s\n' "$changed"
+          if printf '%s\n' "$changed" | grep -Eq '^(mcp_video/|tests/|pyproject\.toml|uv\.lock|Dockerfile|\.github/workflows/ci\.yml)'; then
+            echo "code=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "code=false" >> "$GITHUB_OUTPUT"
+          fi
+          if printf '%s\n' "$changed" | grep -Eq '^(Dockerfile|mcp_video/|pyproject\.toml|uv\.lock|\.dockerignore|\.github/workflows/ci\.yml)'; then
+            echo "docker=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "docker=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  repository-readiness:
+    name: Repository readiness
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+          cache-dependency-path: 'pyproject.toml'
+      - name: Create venv
+        run: python -m venv .venv
+      - name: Run repository readiness audit
+        run: .venv/bin/python ./scripts/repo-readiness-audit.py
+
+  lint:
+    name: Lint
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+          cache-dependency-path: 'pyproject.toml'
+      - name: Create venv
+        run: python -m venv .venv
+      - name: Install ruff
+        run: .venv/bin/pip install ruff
+      - name: Ruff check
+        run: .venv/bin/ruff check mcp_video/ tests/
+      - name: Ruff format check
+        run: .venv/bin/ruff format --check mcp_video/ tests/
+
+  package-surface:
+    name: Package surface
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+          cache-dependency-path: 'pyproject.toml'
+      - name: Create venv
+        run: python -m venv .venv
+      - name: Install build tools
+        run: .venv/bin/pip install build
+      - name: Build release artifacts
+        run: .venv/bin/python -m build --sdist --wheel
+      - name: Check built artifact contents
+        run: .venv/bin/python .github/scripts/check-built-artifacts.py dist
+
+  test:
+    name: Test (Python 3.13)
+    needs: changes
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    steps:
+      - name: Skip tests
+        if: needs.changes.outputs.code != 'true'
+        run: echo "Code inputs unchanged; marking Python 3.13 test check successful."
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        if: needs.changes.outputs.code == 'true'
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        if: needs.changes.outputs.code == 'true'
+        with:
+          python-version: '3.13'
+      - name: Create venv
+        if: needs.changes.outputs.code == 'true'
+        run: python -m venv .venv
+      - name: Ensure FFmpeg
+        if: needs.changes.outputs.code == 'true'
+        run: |
+          if ! command -v ffmpeg &>/dev/null; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg
+          fi
+          ffmpeg -version
+          ffprobe -version
+      - name: Install dependencies
+        if: needs.changes.outputs.code == 'true'
+        run: .venv/bin/pip install -e ".[dev]"
+      - name: Run tests
+        if: needs.changes.outputs.code == 'true'
+        run: .venv/bin/pytest tests/ -q -m "not slow" --tb=short
+
+  compatibility:
+    name: Compatibility (Python ${{ matrix.python-version }})
+    needs: changes
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.13"]
+    steps:
+      - name: Skip compatibility tests
+        if: needs.changes.outputs.code != 'true'
+        run: echo "Code inputs unchanged; marking Python ${{ matrix.python-version }} compatibility check successful."
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        if: needs.changes.outputs.code == 'true'
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        if: needs.changes.outputs.code == 'true'
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Create venv
+        if: needs.changes.outputs.code == 'true'
+        run: python -m venv .venv
+      - name: Ensure FFmpeg
+        if: needs.changes.outputs.code == 'true'
+        run: |
+          if ! command -v ffmpeg &>/dev/null; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg
+          fi
+          ffmpeg -version
+          ffprobe -version
+      - name: Install dependencies
+        if: needs.changes.outputs.code == 'true'
+        run: .venv/bin/pip install -e ".[dev]"
+      - name: Run tests
+        if: needs.changes.outputs.code == 'true'
+        run: .venv/bin/pytest tests/ -q -m "not slow" --tb=short
+
+  docker:
+    name: Docker build
+    needs: changes
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Skip Docker build
+        if: needs.changes.outputs.docker != 'true'
+        run: echo "Docker inputs unchanged; marking Docker check successful."
+      - name: Build Docker image
+        if: needs.changes.outputs.docker == 'true'
+        run: docker build -t mcp-video:test .

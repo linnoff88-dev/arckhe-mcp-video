@@ -1,0 +1,78 @@
+name: Bug report
+description: Report a reproducible mcp-video bug.
+title: "Bug: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping make mcp-video more reliable. Please include enough detail for a maintainer or agent to reproduce the failure locally.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the failure and what you expected instead.
+      placeholder: "I called video_trim with ... and got ..."
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Include the exact MCP tool call, Python snippet, or CLI command.
+      placeholder: |
+        1. Run `mcp-video ...`
+        2. Use input media with ...
+        3. See error ...
+    validations:
+      required: true
+  - type: textarea
+    id: media
+    attributes:
+      label: Input media details
+      description: Share codec, resolution, duration, and whether the file contains audio. Do not upload private media.
+      placeholder: "mp4, H.264/AAC, 1920x1080, 34s, has audio"
+    validations:
+      required: false
+  - type: textarea
+    id: error
+    attributes:
+      label: Error output
+      description: Paste the relevant error or JSON result. Trim secrets and private paths.
+      render: shell
+    validations:
+      required: false
+  - type: input
+    id: version
+    attributes:
+      label: mcp-video version
+      placeholder: "python -c 'import mcp_video; print(mcp_video.__version__)'"
+    validations:
+      required: false
+  - type: input
+    id: ffmpeg
+    attributes:
+      label: FFmpeg version
+      placeholder: "ffmpeg -version"
+    validations:
+      required: false
+  - type: dropdown
+    id: interface
+    attributes:
+      label: Interface
+      options:
+        - MCP server
+        - CLI
+        - Python client
+        - Tests
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include OS, Python version, and anything unusual about the runtime.
+      placeholder: "macOS 15, Python 3.12, Homebrew FFmpeg"
+    validations:
+      required: false

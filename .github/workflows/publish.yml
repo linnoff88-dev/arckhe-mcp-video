@@ -1,0 +1,163 @@
+name: Publish to PyPI
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-${{ github.event.release.tag_name }}
+  cancel-in-progress: false
+
+jobs:
+  surface-audit:
+    name: Check tracked release surface
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.13'
+      - name: Check forbidden tracked artifacts
+        run: python .github/scripts/check-forbidden-artifacts.py
+
+  build:
+    name: Build package
+    needs: surface-audit
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+          fetch-depth: 0  # Needed for hatch-vcs if ever adopted
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.13'
+      - name: Create venv
+        run: python -m venv .venv
+      - name: Install build dependencies
+        run: .venv/bin/pip install build jsonschema twine
+      - name: Verify release version is publishable
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          .venv/bin/python - <<'PY'
+          import json
+          import os
+          import sys
+          import tomllib
+          import urllib.error
+          import urllib.request
+          from pathlib import Path
+
+          version = tomllib.loads(Path("pyproject.toml").read_text())["project"]["version"]
+          package_version = None
+          for line in Path("mcp_video/__init__.py").read_text().splitlines():
+              if line.startswith("__version__"):
+                  package_version = line.split("=", 1)[1].strip().strip('"')
+                  break
+          server = json.loads(Path("server.json").read_text())
+          tag = os.environ["RELEASE_TAG"]
+
+          failures = []
+          if tag != f"v{version}":
+              failures.append(f"release tag {tag!r} does not match pyproject version v{version}")
+          if package_version != version:
+              failures.append(f"mcp_video.__version__ {package_version!r} does not match {version!r}")
+          if server.get("version") != version:
+              failures.append(f"server.json version {server.get('version')!r} does not match {version!r}")
+          package_versions = {pkg.get("version") for pkg in server.get("packages", [])}
+          if package_versions != {version}:
+              failures.append(f"server.json package versions {sorted(package_versions)!r} do not match {version!r}")
+
+          try:
+              urllib.request.urlopen(f"https://pypi.org/pypi/mcp-video/{version}/json", timeout=20).close()
+          except urllib.error.HTTPError as exc:
+              if exc.code != 404:
+                  raise
+          else:
+              failures.append(f"mcp-video {version} already exists on PyPI")
+
+          if failures:
+              print("\\n".join(failures), file=sys.stderr)
+              raise SystemExit(1)
+          print(f"Release {tag} is aligned and PyPI version {version} is available.")
+          PY
+      - name: Validate MCP registry metadata
+        run: |
+          .venv/bin/python - <<'PY'
+          import json
+          import urllib.request
+          from pathlib import Path
+
+          from jsonschema import Draft7Validator
+
+          server = json.loads(Path("server.json").read_text())
+          with urllib.request.urlopen(server["$schema"], timeout=20) as response:
+              schema = json.load(response)
+          errors = sorted(Draft7Validator(schema).iter_errors(server), key=lambda error: list(error.path))
+          if errors:
+              for error in errors:
+                  path = "/".join(str(part) for part in error.path) or "<root>"
+                  print(f"{path}: {error.message}")
+              raise SystemExit(1)
+          print(f"MCP registry metadata is valid for {server['name']} {server['version']}.")
+          PY
+      - name: Build package
+        run: .venv/bin/python -m build
+      - name: Check built artifact contents
+        run: .venv/bin/python .github/scripts/check-built-artifacts.py dist
+      - name: Validate distribution metadata
+        run: .venv/bin/python -m twine check dist/*
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    name: Publish to PyPI
+    needs: build
+    if: startsWith(github.event.release.tag_name, 'v')
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: dist
+          path: dist/
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b # release/v1
+
+  publish-mcp-registry:
+    name: Publish to MCP Registry
+    needs: publish
+    if: startsWith(github.event.release.tag_name, 'v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - name: Install mcp-publisher
+        run: |
+          curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz" | tar xz mcp-publisher
+          ./mcp-publisher --help
+      - name: Authenticate to MCP Registry
+        run: ./mcp-publisher login github-oidc
+      - name: Publish server metadata
+        run: ./mcp-publisher publish

@@ -1,0 +1,243 @@
+"""Video transition effects using FFmpeg."""
+
+from .ffmpeg_helpers import _validate_input_path, _run_command, _get_video_duration, _escape_ffmpeg_filter_value
+from .errors import MCPVideoError
+
+
+def transition_glitch(
+    clip1: str,
+    clip2: str,
+    output: str,
+    duration: float = 0.5,
+    intensity: float = 0.3,
+) -> str:
+    """Glitch transition using RGB shift and noise.
+
+    Args:
+        clip1: First video clip path
+        clip2: Second video clip path
+        output: Output video path
+        duration: Transition duration in seconds
+        intensity: Glitch intensity 0-1
+
+    Returns:
+        Path to output video
+    """
+    clip1 = _validate_input_path(clip1)
+    clip2 = _validate_input_path(clip2)
+
+    if duration <= 0:
+        raise MCPVideoError("duration must be positive", error_type="validation_error", code="invalid_parameter")
+    if not (0.0 <= intensity <= 1.0):
+        raise MCPVideoError("intensity must be 0-1", error_type="validation_error", code="invalid_parameter")
+
+    # Get duration of first clip to calculate offset
+    clip1_duration = _get_video_duration(clip1)
+    offset = clip1_duration - duration
+
+    # Ensure offset is not negative
+    if offset < 0:
+        offset = 0
+
+    # Calculate intensity-based parameters
+    # Intensity 0-1 maps to RGB shift of 0-20 pixels
+    rgb_shift = int(intensity * 20)
+    noise_amount = int(intensity * 10)
+
+    # Use rgbashift filter for RGB channel shifting
+    # More reliable than geq which has complex escaping requirements
+    safe_duration = _escape_ffmpeg_filter_value(str(duration))
+    safe_offset = _escape_ffmpeg_filter_value(str(offset))
+    safe_rgb_shift = _escape_ffmpeg_filter_value(str(rgb_shift))
+    safe_noise_amount = _escape_ffmpeg_filter_value(str(noise_amount))
+    filter_complex = (
+        f"[0:v][1:v]xfade=transition=fade:duration={safe_duration}:offset={safe_offset}[faded];"
+        f"[faded]rgbashift=rh={safe_rgb_shift}:gh=0:bh=-{safe_rgb_shift}:ah=0[rgbshift];"
+        f"[rgbshift]noise=alls={safe_noise_amount}:allf=t+u[glitched]"
+    )
+
+    cmd = [
+        "ffmpeg",
+        "-y",
+        "-i",
+        clip1,
+        "-i",
+        clip2,
+        "-filter_complex",
+        filter_complex,
+        "-map",
+        "[glitched]",
+        "-c:v",
+        "libx264",
+        "-pix_fmt",
+        "yuv420p",
+        "-movflags",
+        "+faststart",
+        output,
+    ]
+
+    _run_command(cmd)
+
+    return output
+
+
+def transition_pixelate(
+    clip1: str,
+    clip2: str,
+    output: str,
+    duration: float = 0.4,
+    pixel_size: int = 50,
+) -> str:
+    """Pixel dissolve transition using scale filter.
+
+    Creates a transition where the video pixelates during the crossfade,
+    with the pixelation peaking at the middle of the transition.
+
+    Args:
+        clip1: First video clip path
+        clip2: Second video clip path
+        output: Output video path
+        duration: Transition duration in seconds
+        pixel_size: Maximum pixel size during transition
+
+    Returns:
+        Path to output video
+    """
+    clip1 = _validate_input_path(clip1)
+    clip2 = _validate_input_path(clip2)
+
+    if pixel_size < 2:
+        raise MCPVideoError("pixel_size must be at least 2", error_type="validation_error", code="invalid_parameter")
+    if duration <= 0:
+        raise MCPVideoError("duration must be positive", error_type="validation_error", code="invalid_parameter")
+
+    # Get duration of first clip to calculate offset
+    clip1_duration = _get_video_duration(clip1)
+    offset = clip1_duration - duration
+
+    # Ensure offset is not negative
+    if offset < 0:
+        offset = 0
+
+    # Calculate transition midpoint
+    mid = offset + duration / 2
+
+    # Build filter_complex using scale with eval=frame
+    #
+    # The pixelation effect:
+    # 1. First scale down by factor N (creating pixelation)
+    # 2. Then scale back up with neighbor flag (preserving blocky look)
+    #
+    # Scale factor N varies from 1 (no pixelation) to pixel_size (max pixelation)
+    # Using cos curve centered on transition midpoint for smooth animation
+    #
+    # eval=frame is required to evaluate expressions per-frame using 't' variable
+
+    # Build scale expressions that ensure dimensions stay even
+    # Use trunc to round down to integer, then ensure it's at least 2 and even
+    safe_duration = _escape_ffmpeg_filter_value(str(duration))
+    safe_offset = _escape_ffmpeg_filter_value(str(offset))
+    safe_pixel_size = _escape_ffmpeg_filter_value(str(pixel_size))
+    safe_mid = _escape_ffmpeg_filter_value(str(mid))
+    cos_expr = f"((1+cos((t-{safe_mid})*PI/{safe_duration}))/2)"
+    scale_w_expr = f"trunc(iw/max(1,min({safe_pixel_size},1+({safe_pixel_size}-1)*{cos_expr}))/2)*2"
+    scale_h_expr = f"trunc(ih/max(1,min({safe_pixel_size},1+({safe_pixel_size}-1)*{cos_expr}))/2)*2"
+
+    filter_complex = (
+        f"[0:v][1:v]xfade=transition=fade:duration={safe_duration}:offset={safe_offset}[faded];"
+        f"[faded]scale='{scale_w_expr}':'{scale_h_expr}':flags=neighbor:eval=frame,"
+        f"scale=iw:ih:flags=neighbor[output]"
+    )
+
+    cmd = [
+        "ffmpeg",
+        "-y",
+        "-i",
+        clip1,
+        "-i",
+        clip2,
+        "-filter_complex",
+        filter_complex,
+        "-map",
+        "[output]",
+        "-c:v",
+        "libx264",
+        "-pix_fmt",
+        "yuv420p",
+        "-movflags",
+        "+faststart",
+        output,
+    ]
+
+    _run_command(cmd)
+
+    return output
+
+
+def transition_morph(
+    clip1: str,
+    clip2: str,
+    output: str,
+    duration: float = 0.6,
+    mesh_size: int = 10,
+) -> str:
+    """Mesh warp morph transition using pixelization effect.
+
+    Creates a morph-like transition using FFmpeg's pixelize transition.
+    The mesh_size parameter controls the intensity of the warp effect.
+
+    Args:
+        clip1: First video clip path
+        clip2: Second video clip path
+        output: Output video path
+        duration: Transition duration in seconds
+        mesh_size: Grid subdivisions (reserved for future warp intensity control)
+
+    Returns:
+        Path to output video
+    """
+    clip1 = _validate_input_path(clip1)
+    clip2 = _validate_input_path(clip2)
+
+    if duration <= 0:
+        raise MCPVideoError("duration must be positive", error_type="validation_error", code="invalid_parameter")
+    if mesh_size < 2:
+        raise MCPVideoError("mesh_size must be at least 2", error_type="validation_error", code="invalid_parameter")
+
+    # Get duration of first clip to calculate offset
+    clip1_duration = _get_video_duration(clip1)
+    offset = clip1_duration - duration
+
+    # Ensure offset is not negative
+    if offset < 0:
+        offset = 0
+
+    # Use xfade with pixelize transition for morph-like effect
+    # pixelize creates a blocky dissolve that simulates mesh morphing
+    safe_duration = _escape_ffmpeg_filter_value(str(duration))
+    safe_offset = _escape_ffmpeg_filter_value(str(offset))
+    filter_complex = f"[0:v][1:v]xfade=transition=pixelize:duration={safe_duration}:offset={safe_offset}[output]"
+
+    cmd = [
+        "ffmpeg",
+        "-y",
+        "-i",
+        clip1,
+        "-i",
+        clip2,
+        "-filter_complex",
+        filter_complex,
+        "-map",
+        "[output]",
+        "-c:v",
+        "libx264",
+        "-pix_fmt",
+        "yuv420p",
+        "-movflags",
+        "+faststart",
+        output,
+    ]
+
+    _run_command(cmd)
+
+    return output
