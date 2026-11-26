@@ -74,7 +74,7 @@ def add_parsers(subparsers: argparse._SubParsersAction) -> None:
     aigrade_p.add_argument(
         "--style",
         default="auto",
-        choices=["auto", "cinematic", "vintage", "warm", "cool", "dramatic"],
+        choices=["auto", "cARCKHÉtic", "vintage", "warm", "cool", "dramatic"],
         help="Color style (default: auto)",
     )
 

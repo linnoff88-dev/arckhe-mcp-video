@@ -24,7 +24,7 @@ def video_generate_music(
 
     Args:
         prompt: Text description of the music style, mood, and scenario.
-                Example: "Cinematic orchestral trailer, epic drums, brass, 120bpm".
+                Example: "CARCKHÉtic orchestral trailer, epic drums, brass, 120bpm".
         output_path: Absolute path to save the generated audio file.
         model: MiniMax model to use. "music-2.6-free" for free tier,
                "music-2.6" for paid (higher quality and RPM).

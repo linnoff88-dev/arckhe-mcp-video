@@ -434,8 +434,8 @@ class TestColorPresetFilter:
         vf = _get_color_preset_filter("noir")
         assert "saturation=0.0" in vf
 
-    def test_cinematic_preset(self):
-        vf = _get_color_preset_filter("cinematic")
+    def test_cARCKHÉtic_preset(self):
+        vf = _get_color_preset_filter("cARCKHÉtic")
         assert "contrast=1.15" in vf
 
     def test_vintage_preset(self):
@@ -501,8 +501,8 @@ class TestApplyFilter:
         assert os.path.isfile(result.output_path)
 
     @requires_filter("eq", "Color preset filter")
-    def test_color_preset_cinematic(self, sample_video):
-        result = apply_filter(sample_video, filter_type="color_preset", params={"preset": "cinematic"})
+    def test_color_preset_cARCKHÉtic(self, sample_video):
+        result = apply_filter(sample_video, filter_type="color_preset", params={"preset": "cARCKHÉtic"})
         assert os.path.isfile(result.output_path)
 
     def test_custom_output_path(self, sample_video, tmp_path):

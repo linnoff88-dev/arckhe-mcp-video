@@ -848,7 +848,7 @@ class TestServerValidationOverlayPosition:
 
 class TestServerValidationHls:
     def test_rejects_bad_hls_quality_before_input_validation(self):
-        result = video_hls_segment("/tmp/missing.mp4", qualities=["high", "cinema"])
+        result = video_hls_segment("/tmp/missing.mp4", qualities=["high", "cARCKHÉ"])
 
         assert result["success"] is False
         assert "qualities" in result["error"]["message"]

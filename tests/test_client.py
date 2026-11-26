@@ -307,7 +307,7 @@ class TestClientBlur:
 class TestClientColorGrade:
     @requires_filter("eq", "Color preset filter")
     def test_color_grade_returns_edit_result(self, editor, sample_video):
-        result = editor.color_grade(sample_video, preset="cinematic")
+        result = editor.color_grade(sample_video, preset="cARCKHÉtic")
         assert isinstance(result, EditResult)
         assert os.path.isfile(result.output_path)
 
@@ -394,7 +394,7 @@ class TestClientValidators:
 
     def test_hls_segment_rejects_unknown_quality(self, editor):
         with pytest.raises(MCPVideoError, match="qualities"):
-            editor.hls_segment("/tmp/video.mp4", qualities=["high", "cinema"])
+            editor.hls_segment("/tmp/video.mp4", qualities=["high", "cARCKHÉ"])
 
     def test_watermark_rejects_unknown_position(self, editor):
         with pytest.raises(MCPVideoError, match="position must be one of"):

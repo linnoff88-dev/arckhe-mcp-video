@@ -129,7 +129,7 @@ class TestCLIBlur:
 
 class TestCLIColorGrade:
     def test_color_grade_outputs_json(self, sample_video):
-        result = run_cli_json("color-grade", sample_video, "-p", "cinematic")
+        result = run_cli_json("color-grade", sample_video, "-p", "cARCKHÉtic")
         data = json.loads(result.stdout)
         assert data["success"] is True
 

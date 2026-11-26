@@ -8,7 +8,7 @@ mcp-video gives AI agents 119 structured tools for FFmpeg-based video editing, P
 - Claude Code / Cursor video editing tools
 - FFmpeg automation through MCP
 - Agentic media pipelines
-- Cinematic video prompt planning with STYLE_/NEG_ blocks and storyboard tables
+- CARCKHÉtic video prompt planning with STYLE_/NEG_ blocks and storyboard tables
 - Hyperframes 0.5 rendering, snapshots, inspection, catalog blocks, website capture, local TTS, transcription, background removal, diagnostics, and benchmarks
 - Local repurposing packages for Shorts, Reels, TikTok, and YouTube variants
 - Python video editing scripts
@@ -23,7 +23,7 @@ mcp-video gives AI agents 119 structured tools for FFmpeg-based video editing, P
 - `docs/TOOLS.md`: MCP tool reference
 - `docs/AI_AGENT_DISCOVERY.md`: agent discovery guidance
 - `skills/mcp-video/SKILL.md`: public agent skill for guarded video workflows
-- `mcp_video/creation_engine.py`: cinematic project, style-pack, storyboard, and shot-prompt helpers
+- `mcp_video/creation_engine.py`: cARCKHÉtic project, style-pack, storyboard, and shot-prompt helpers
 - `mcp_video/engine_repurpose.py`: local platform package planning and rendering
 - `examples/`: usage examples
 
@@ -43,4 +43,4 @@ Invoke `$mcp-video` in compatible agent hosts when the user wants local media in
 mcp-video is listed on the [official MCP Registry](https://registry.modelcontextprotocol.io/servers/io.github.KyaniteLabs/mcp-video) as `io.github.KyaniteLabs/mcp-video`. Registry metadata is in `server.json` at the repo root.
 
 ## Keywords
-video editing MCP server, guardrailed video editing MCP server, AI agent video editing, safe agentic media automation, cinematic video storyboard MCP, AI video style pack, FFmpeg automation, Claude Code video tools, Cursor MCP video tools, Codex video automation, Python video library, video automation CLI, Model Context Protocol, Hyperframes, local TTS, video background removal, subtitles, reels automation, shorts automation, video repurposing.
+video editing MCP server, guardrailed video editing MCP server, AI agent video editing, safe agentic media automation, cARCKHÉtic video storyboard MCP, AI video style pack, FFmpeg automation, Claude Code video tools, Cursor MCP video tools, Codex video automation, Python video library, video automation CLI, Model Context Protocol, Hyperframes, local TTS, video background removal, subtitles, reels automation, shorts automation, video repurposing.

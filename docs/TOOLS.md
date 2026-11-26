@@ -20,13 +20,13 @@ results = editor.search_tools("subtitle")
 
 ---
 
-## Cinematic Creation (4 tools)
+## CARCKHÉtic Creation (4 tools)
 
 Plan video generation like a director of photography before rendering. These tools implement a PUSHING CREATION-compatible pre-production workflow: project scaffold, STYLE_/NEG_ blocks, storyboard tables, and prompt expansion.
 
 | Tool | Description |
 |------|-------------|
-| `video_project_create` | Scaffold `projects/<slug>/style.md`, `storyboard.md`, and `refs/` using cinematic starter templates |
+| `video_project_create` | Scaffold `projects/<slug>/style.md`, `storyboard.md`, and `refs/` using cARCKHÉtic starter templates |
 | `style_pack_read` | Parse STYLE_ and NEG_ blocks from `style.md` or a project directory |
 | `storyboard_read` | Parse storyboard rows from `storyboard.md` or a project directory |
 | `shot_prompt_render` | Expand one storyboard shot into `prompt` and `negative_prompt` strings for a generation provider |
@@ -158,7 +158,7 @@ Generate audio from code — no external audio files needed. Pure NumPy, no extr
 
 | Tool | Description |
 |------|-------------|
-| `effect_vignette` | Darken edges for cinematic focus |
+| `effect_vignette` | Darken edges for cARCKHÉtic focus |
 | `effect_chromatic_aberration` | RGB color separation (glitch aesthetic) |
 | `effect_scanlines` | Retro CRT scanline effect with flicker |
 | `effect_noise` | Film grain and digital noise |

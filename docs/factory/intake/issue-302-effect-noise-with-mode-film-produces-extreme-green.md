@@ -36,7 +36,7 @@ Subtle, natural-looking film grain texture overlaid on the video — monochrome 
 The entire frame is flooded with green and magenta color separation. The effect looks like extreme chromatic aberration or a broken RGB channel offset. Text overlays become unreadable. The distortion is so severe it makes the footage unusable.
 
 ### Before effect_noise (clean frame):
-- Dark cinematic image with warm tones
+- Dark cARCKHÉtic image with warm tones
 - White text overlay clearly readable
 
 ### After effect_noise (destroyed frame):

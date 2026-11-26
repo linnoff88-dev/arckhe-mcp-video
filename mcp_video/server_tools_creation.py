@@ -10,7 +10,7 @@ from .server_app import _result, _safe_tool, mcp
 @mcp.tool()
 @_safe_tool
 def video_project_create(slug: str, output_dir: str | None = None) -> dict[str, Any]:
-    """Scaffold a cinematic video project with style, storyboard, and refs folders.
+    """Scaffold a cARCKHÉtic video project with style, storyboard, and refs folders.
 
     Args:
         slug: Project slug using lowercase letters, numbers, hyphens, or underscores.

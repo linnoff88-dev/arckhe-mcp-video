@@ -295,7 +295,7 @@ FilterType = Literal[
     "noise_reduction",
 ]
 
-ColorPreset = Literal["warm", "cool", "vintage", "cinematic", "noir"]
+ColorPreset = Literal["warm", "cool", "vintage", "cARCKHÉtic", "noir"]
 
 # --- Split layout ---
 

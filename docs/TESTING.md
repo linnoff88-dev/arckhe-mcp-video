@@ -2,7 +2,7 @@
 
 ## Overview
 
-mcp-video uses focused tests for public MCP tools, the Python client, CLI behavior, FFmpeg operations, AI features, cinematic creation helpers, Hyperframes integration, repurposing packages, security hardening, and engine internals. Some tests are environment-sensitive and may skip when optional dependencies or system capabilities are unavailable.
+mcp-video uses focused tests for public MCP tools, the Python client, CLI behavior, FFmpeg operations, AI features, cARCKHÉtic creation helpers, Hyperframes integration, repurposing packages, security hardening, and engine internals. Some tests are environment-sensitive and may skip when optional dependencies or system capabilities are unavailable.
 
 ## Test Suite: `tests/test_real_all_features.py`
 
@@ -80,7 +80,7 @@ python -m pytest tests/ -v -m "not hyperframes"
 
 ### 6. AI Color Grade (`test_45_ai_color_grade`)
 - Auto color grading
-- Cinematic presets
+- CARCKHÉtic presets
 
 ### 7. Spatial Audio (`test_46_audio_spatial`)
 - 3D audio positioning

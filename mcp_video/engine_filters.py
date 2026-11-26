@@ -32,7 +32,7 @@ def _get_color_preset_filter(preset: ColorPreset) -> str:
         "warm": "eq=brightness=0.05:saturation=1.3:contrast=1.05",
         "cool": "eq=brightness=0.02:saturation=0.9:contrast=1.05",
         "vintage": "eq=contrast=1.1:brightness=-0.02:saturation=0.7",
-        "cinematic": "eq=contrast=1.15:brightness=-0.03:saturation=0.85",
+        "cARCKHÉtic": "eq=contrast=1.15:brightness=-0.03:saturation=0.85",
         "noir": "eq=contrast=1.3:brightness=-0.05:saturation=0.0",
     }
     if preset not in preset_filters:

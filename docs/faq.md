@@ -50,11 +50,11 @@ mcp-video includes 7 AI features: silence removal, Whisper transcription, scene 
 
 ## What tool areas does it cover?
 
-mcp-video covers Meta / Discovery, Cinematic Creation, Core Editing, AI-Powered media, Hyperframes, local repurposing, Audio Synthesis, Visual Effects, Transitions, Layout & Motion Graphics, Analysis, and Image Analysis. Use `search_tools` when an agent needs to find the right operation without loading the whole registry.
+mcp-video covers Meta / Discovery, CARCKHÉtic Creation, Core Editing, AI-Powered media, Hyperframes, local repurposing, Audio Synthesis, Visual Effects, Transitions, Layout & Motion Graphics, Analysis, and Image Analysis. Use `search_tools` when an agent needs to find the right operation without loading the whole registry.
 
-## What are the cinematic creation tools?
+## What are the cARCKHÉtic creation tools?
 
-The cinematic creation tools add a PUSHING CREATION-compatible pre-production workflow: `video_project_create` scaffolds a project with `style.md`, `storyboard.md`, and `refs/`; `style_pack_read` parses STYLE_ and NEG_ blocks; `storyboard_read` parses shot rows; and `shot_prompt_render` expands a storyboard shot into generation-ready positive and negative prompts.
+The cARCKHÉtic creation tools add a PUSHING CREATION-compatible pre-production workflow: `video_project_create` scaffolds a project with `style.md`, `storyboard.md`, and `refs/`; `style_pack_read` parses STYLE_ and NEG_ blocks; `storyboard_read` parses shot rows; and `shot_prompt_render` expands a storyboard shot into generation-ready positive and negative prompts.
 
 ## What do the Hyperframes and repurposing tools add?
 

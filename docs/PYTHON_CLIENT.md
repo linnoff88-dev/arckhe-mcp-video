@@ -192,7 +192,7 @@ print(checkpoint["quality_score"])  # Must pass min_score
 
 | Method | Returns | Description |
 |--------|---------|-------------|
-| `effect_vignette(video, output, intensity?, radius?, smoothness?)` | `EditResult` | Darken edges for cinematic focus |
+| `effect_vignette(video, output, intensity?, radius?, smoothness?)` | `EditResult` | Darken edges for cARCKHÉtic focus |
 | `effect_chromatic_aberration(video, output, intensity?, angle?)` | `EditResult` | RGB color separation (glitch aesthetic) |
 | `effect_scanlines(video, output, line_height?, opacity?, flicker?)` | `EditResult` | Retro CRT scanline effect |
 | `effect_noise(video, output, intensity?, mode?, animated?)` | `EditResult` | Film grain and digital noise |

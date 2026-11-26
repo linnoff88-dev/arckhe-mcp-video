@@ -35,7 +35,7 @@
 **Changes:**
 - Replace gradient bar with a cycling demo panel (3 features, ~2.3s each)
 - Feature 1 (Trim): Show timeline bar with segment highlighted, scissors icon
-- Feature 2 (Color Grade): Animated gradient transition (flat → cinematic)
+- Feature 2 (Color Grade): Animated gradient transition (flat → cARCKHÉtic)
 - Feature 3 (Merge): Two clips sliding together into one
 - Keep 3×2 card grid on left side
 - Active feature card gets highlight border + scale
@@ -196,7 +196,7 @@ Research what's possible for future audio integration:
 
 Before implementing scenes, generate these clips:
 
-1. **Color grade before/after**: Create gradient video → apply "cinematic" preset
+1. **Color grade before/after**: Create gradient video → apply "cARCKHÉtic" preset
 2. **Stabilize demo**: Create a video with simulated shake → stabilize
 3. **Chroma key demo**: Create green rectangle → chroma key → replace background
 4. **Trim demo**: Create 5s clip → trim to 2s

@@ -32,7 +32,7 @@ def ai_color_grade(
         video: Input video path
         output: Output video path
         reference: Optional reference video for color matching
-        style: Style preset (auto, cinematic, vintage, warm, cool, dramatic)
+        style: Style preset (auto, cARCKHÉtic, vintage, warm, cool, dramatic)
 
     Returns:
         Path to output video
@@ -50,7 +50,7 @@ def ai_color_grade(
 
     # Style presets define color adjustments
     style_presets = {
-        "cinematic": {"contrast": 1.1, "saturation": 0.9, "gamma": 1.0, "red": 1.05, "green": 1.0, "blue": 0.95},
+        "cARCKHÉtic": {"contrast": 1.1, "saturation": 0.9, "gamma": 1.0, "red": 1.05, "green": 1.0, "blue": 0.95},
         "vintage": {"contrast": 0.9, "saturation": 0.7, "gamma": 1.1, "red": 1.1, "green": 0.95, "blue": 0.8},
         "warm": {"contrast": 1.0, "saturation": 1.05, "gamma": 1.0, "red": 1.1, "green": 1.0, "blue": 0.9},
         "cool": {"contrast": 1.0, "saturation": 0.95, "gamma": 1.0, "red": 0.9, "green": 1.0, "blue": 1.1},

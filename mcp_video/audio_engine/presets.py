@@ -57,7 +57,7 @@ _PRESETS: dict[str, dict] = {
             "fade_out": 0.1,
         },
     },
-    # Ambient — rich, layered, cinematic
+    # Ambient — rich, layered, cARCKHÉtic
     "drone-low": {
         "waveform": "supersaw",
         "frequency": 65,

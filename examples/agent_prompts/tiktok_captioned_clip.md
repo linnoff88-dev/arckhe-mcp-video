@@ -115,7 +115,7 @@ input_path: /tmp/tiktok_with_music.mp4
 preset: warm
 output_path: /tmp/tiktok_graded.mp4
 ```
-Warm tones tend to perform better on TikTok -- they feel inviting and cinematic on small screens.
+Warm tones tend to perform better on TikTok -- they feel inviting and cARCKHÉtic on small screens.
 
 ### Step 7: Add a hook text overlay at the top
 

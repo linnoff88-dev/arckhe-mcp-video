@@ -67,7 +67,7 @@ npx hyperframes render --output demo.mp4
 
 ### Catalog
 
-50+ ready-to-use blocks (social overlays, shader transitions, data viz, cinematic effects):
+50+ ready-to-use blocks (social overlays, shader transitions, data viz, cARCKHÉtic effects):
 
 ```bash
 npx hyperframes add flash-through-white

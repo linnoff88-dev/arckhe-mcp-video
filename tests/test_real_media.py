@@ -116,7 +116,7 @@ class TestFilterRealMedia:
         assert info.width == orig.width
         assert info.height == orig.height
 
-    @pytest.mark.parametrize("preset", ["warm", "cool", "vintage", "cinematic", "noir"])
+    @pytest.mark.parametrize("preset", ["warm", "cool", "vintage", "cARCKHÉtic", "noir"])
     def test_color_preset_preserves_resolution(self, real_landscape, tmp_path, preset):
         _require_ffmpeg()
         out = str(tmp_path / f"preset_{preset}.mov")
@@ -237,11 +237,11 @@ class TestCrossFeatureRealMedia:
 
     def test_filter_chain_then_normalize(self, real_mp4, tmp_path):
         _require_ffmpeg()
-        step1 = str(tmp_path / "cinematic.mp4")
-        r1 = apply_filter(real_mp4, "color_preset", {"preset": "cinematic"}, step1)
+        step1 = str(tmp_path / "cARCKHÉtic.mp4")
+        r1 = apply_filter(real_mp4, "color_preset", {"preset": "cARCKHÉtic"}, step1)
         assert r1.success
 
-        step2 = str(tmp_path / "cinematic_sharp.mp4")
+        step2 = str(tmp_path / "cARCKHÉtic_sharp.mp4")
         r2 = apply_filter(r1.output_path, "sharpen", {"amount": 1.5}, step2)
         assert r2.success
 

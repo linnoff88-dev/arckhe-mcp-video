@@ -10,7 +10,7 @@
 
 <p align="center">
   <strong>Guardrailed video editing MCP server for AI agents.</strong><br>
-  Structured tools for FFmpeg video editing, cinematic prompt planning, media analysis, subtitles, audio, effects, Hyperframes video creation, local repurposing packages, and preflight validation that helps prevent silent bad media output.
+  Structured tools for FFmpeg video editing, cARCKHÉtic prompt planning, media analysis, subtitles, audio, effects, Hyperframes video creation, local repurposing packages, and preflight validation that helps prevent silent bad media output.
 </p>
 
 <p align="center">
@@ -65,7 +65,7 @@ Use it when you want an AI assistant to:
 - add text, subtitles, watermarks, overlays, filters, fades, effects, and transitions;
 - extract audio, normalize audio, synthesize audio, add generated audio, or create waveforms;
 - detect scenes, make thumbnails, generate storyboards, compare quality, and create release checkpoints;
-- scaffold cinematic projects, read STYLE_/NEG_ blocks, parse storyboard tables, and expand shot prompts;
+- scaffold cARCKHÉtic projects, read STYLE_/NEG_ blocks, parse storyboard tables, and expand shot prompts;
 - create new Hyperframes projects, inspect rendered layouts, capture websites, generate local speech, remove backgrounds, and post-process the result with FFmpeg tools;
 - repurpose one source video into vertical, horizontal, and square local delivery packages with manifests and review artifacts;
 - drive repeatable media workflows from Claude Code, Cursor, Codex-style clients, scripts, or CI.
@@ -195,7 +195,7 @@ mcp-video repurpose clip.mp4 --platforms youtube-shorts instagram-reel tiktok
 | Social clips | "Turn this landscape recording into a captioned TikTok and YouTube Short." |
 | Podcast production | "Find the strongest segment, trim it, normalize audio, add chapters, and export." |
 | Product demos | "Create a short launch video from screenshots, title cards, and voiceover." |
-| Cinematic planning | "Create a style pack and storyboard, then render shot prompts for generation." |
+| CARCKHÉtic planning | "Create a style pack and storyboard, then render shot prompts for generation." |
 | Quality review | "Compare these two exports, make thumbnails, and flag visual or audio problems." |
 | Batch automation | "Convert this folder of clips to web-ready MP4 with consistent loudness." |
 | Code-created video | "Scaffold a Hyperframes composition, inspect it, render it, then add subtitles and a watermark." |
@@ -208,7 +208,7 @@ mcp-video currently registers **119 MCP tools**. The table below summarizes the 
 | Category | Count | Highlights |
 | --- | ---: | --- |
 | Core video editing | 32 | trim, merge, resize, crop, rotate, convert, overlays, subtitles, export, cleanup, templates, merge-compatibility guardrails |
-| Cinematic creation | 4 | project scaffold, style-pack parsing, storyboard parsing, shot prompt expansion |
+| CARCKHÉtic creation | 4 | project scaffold, style-pack parsing, storyboard parsing, shot prompt expansion |
 | AI-assisted media | 11 | transcription, scene detection, upscaling, stem separation, silence removal, color grading |
 | Hyperframes | 18 | init, preview, render, snapshots, inspect, catalog, website capture, local TTS, transcription, background removal, diagnostics, benchmark, post-process |
 | Repurposing | 2 | dry-run manifests, platform-ready variants, thumbnails, storyboards, release checkpoints |

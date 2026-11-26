@@ -166,7 +166,7 @@ The right side currently has a static gradient with BEFORE/AFTER labels. Replace
                 },
                 {
                   title: 'Color Grade',
-                  desc: 'Cinematic presets',
+                  desc: 'CARCKHÉtic presets',
                   icon: '🎨',
                   visual: (
                     <div style={{ height: 200, position: 'relative', borderRadius: 8, overflow: 'hidden' }}>
@@ -175,7 +175,7 @@ The right side currently has a static gradient with BEFORE/AFTER labels. Replace
                         position: 'absolute', inset: 0,
                         background: 'linear-gradient(135deg, #3a3a3a, #4a4a4a, #3a3a3a)',
                       }} />
-                      {/* After: cinematic overlay sweeps in */}
+                      {/* After: cARCKHÉtic overlay sweeps in */}
                       <div style={{
                         position: 'absolute', inset: 0,
                         background: 'linear-gradient(135deg, #0f3460, #533483, #e94560)',

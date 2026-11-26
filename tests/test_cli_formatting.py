@@ -69,7 +69,7 @@ class TestFormattersSimple:
         _format_ai_upscale("/tmp/up.mp4", 2.0)
 
     def test_format_ai_color_grade(self):
-        _format_ai_color_grade("/tmp/graded.mp4", "cinematic")
+        _format_ai_color_grade("/tmp/graded.mp4", "cARCKHÉtic")
 
     def test_format_ai_remove_silence(self):
         _format_ai_remove_silence("/tmp/nosil.mp4")

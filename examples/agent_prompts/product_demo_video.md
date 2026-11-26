@@ -110,15 +110,15 @@ output_path: /tmp/demo_ch3.mp4
 ```
 Chapter titles orient the viewer and make the demo scannable. The 4-second duration is long enough to read without blocking content.
 
-### Step 6: Apply cinematic color grading
+### Step 6: Apply cARCKHÉtic color grading
 
-Use **video_filter** with `filter_type="color_preset"` and `params={"preset": "cinematic"}` for a professional, polished look.
+Use **video_filter** with `filter_type="color_preset"` and `params={"preset": "cARCKHÉtic"}` for a professional, polished look.
 ```
 input_path: /tmp/demo_ch3.mp4
-preset: cinematic
+preset: cARCKHÉtic
 output_path: /tmp/demo_graded.mp4
 ```
-The cinematic preset adds subtle contrast and color richness that makes screen recordings look more intentional and branded.
+The cARCKHÉtic preset adds subtle contrast and color richness that makes screen recordings look more intentional and branded.
 
 ### Step 7: Add fade in and fade out
 

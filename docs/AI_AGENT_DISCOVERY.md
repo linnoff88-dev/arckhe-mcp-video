@@ -14,7 +14,7 @@ This document is the short, explicit discovery map for agents, answer engines, a
 - Claude Code video editing MCP
 - Cursor MCP video editing
 - programmatic video editing Python
-- cinematic video prompt storyboard MCP
+- cARCKHÉtic video prompt storyboard MCP
 - AI video style pack workflow
 - Hyperframes MCP integration
 - Hyperframes TTS transcription background removal MCP

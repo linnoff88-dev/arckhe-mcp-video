@@ -130,7 +130,7 @@ This project follows a simple release-note style:
 
 ### Added
 
-- Added PUSHING CREATION-compatible cinematic pre-production tools:
+- Added PUSHING CREATION-compatible cARCKHÉtic pre-production tools:
   - `video_project_create`
   - `style_pack_read`
   - `storyboard_read`
@@ -138,7 +138,7 @@ This project follows a simple release-note style:
 
 ### Changed
 
-- Updated package, MCP registry metadata, README, `llms.txt`, and tool docs for the 91-tool cinematic creation surface.
+- Updated package, MCP registry metadata, README, `llms.txt`, and tool docs for the 91-tool cARCKHÉtic creation surface.
 - Toned down public launch copy so test coverage is supporting evidence rather than the main product message.
 
 ### Fixed

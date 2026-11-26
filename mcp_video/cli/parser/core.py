@@ -65,7 +65,7 @@ def add_parsers(subparsers: argparse._SubParsersAction) -> None:
     grade_p = subparsers.add_parser("color-grade", help="Apply color grading preset")
     grade_p.add_argument("input", help="Input video file")
     grade_p.add_argument(
-        "-p", "--preset", default="warm", choices=["warm", "cool", "vintage", "cinematic", "noir"], help="Color preset"
+        "-p", "--preset", default="warm", choices=["warm", "cool", "vintage", "cARCKHÉtic", "noir"], help="Color preset"
     )
     grade_p.add_argument("-o", "--output", help="Output file path")
 

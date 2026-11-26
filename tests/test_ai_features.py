@@ -641,10 +641,10 @@ class TestColorGrade:
             ]
             subprocess.run(cmd, capture_output=True, check=True)
 
-            # Test cinematic style
+            # Test cARCKHÉtic style
             from mcp_video.ai_engine import ai_color_grade
 
-            result = ai_color_grade(input_video, output_video, style="cinematic")
+            result = ai_color_grade(input_video, output_video, style="cARCKHÉtic")
             assert os.path.exists(result), "Output video should be created"
             assert result == output_video
 
@@ -676,7 +676,7 @@ class TestColorGrade:
             subprocess.run(cmd, capture_output=True, check=True)
 
             # Test each style preset
-            for style in ["cinematic", "vintage", "warm", "cool", "dramatic", "auto"]:
+            for style in ["cARCKHÉtic", "vintage", "warm", "cool", "dramatic", "auto"]:
                 output_video = os.path.join(tmpdir, f"output_{style}.mp4")
                 result = ai_color_grade(input_video, output_video, style=style)
                 assert os.path.exists(result), f"Output not created for style: {style}"

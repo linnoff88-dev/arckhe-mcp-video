@@ -4,14 +4,14 @@ Inspired by github.com/PUSHINGSQUARES/pushing-creation and kept compatible
 with the STYLE_/NEG_ block convention used by PUSHING FRAMES.
 -->
 ---
-title: Cinematography Rules - Starter Library
+title: CARCKHÉtography Rules - Starter Library
 author: mcp-video
 pack_version: '0.1'
-template_id: cinematography
+template_id: cARCKHÉtography
 ---
 
 ## STYLE_PHOTOREAL_BASE
-photorealistic textures, real-world physics, natural skin pores, fabric weave visible, micro-imperfections, scratches, dust, fingerprints, shot on professional cinema equipment by a working DP, high dynamic range, natural depth of field falloff, no AI-clean.
+photorealistic textures, real-world physics, natural skin pores, fabric weave visible, micro-imperfections, scratches, dust, fingerprints, shot on professional cARCKHÉ equipment by a working DP, high dynamic range, natural depth of field falloff, no AI-clean.
 
 ## STYLE_KODAK_VISION
 kodak vision3 50d daylight stock with kodak 2383 print emulation, gentle highlight rolloff, subtle shadow crush, warm neutral midtones, organic colour science, finished print look.

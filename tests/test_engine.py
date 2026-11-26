@@ -527,7 +527,7 @@ class TestHlsValidation:
         )
 
         with pytest.raises(MCPVideoError, match="qualities"):
-            engine_hls.hls_segment(sample_video, qualities=["high", "cinema"])
+            engine_hls.hls_segment(sample_video, qualities=["high", "cARCKHÉ"])
 
     def test_hls_rejects_non_positive_segment_duration_before_probe(self, sample_video, monkeypatch):
         from mcp_video import engine_hls

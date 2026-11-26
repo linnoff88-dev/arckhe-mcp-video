@@ -77,7 +77,7 @@ def video_filter(
 
     Common presets:
         - blur: params={"radius": 5, "strength": 1}
-        - color_preset: params={"preset": "warm"} (warm, cool, vintage, cinematic, noir)
+        - color_preset: params={"preset": "warm"} (warm, cool, vintage, cARCKHÉtic, noir)
 
     Args:
         input_path: Absolute path to the input video.

@@ -4,11 +4,11 @@
 
 **Don't say:** "I built a video editing MCP server" (there are 20+).
 
-**Do say:** "I built a local video-production surface for AI agents: editing, cinematic planning, rendering, and release checks without brittle FFmpeg prompting."
+**Do say:** "I built a local video-production surface for AI agents: editing, cARCKHÉtic planning, rendering, and release checks without brittle FFmpeg prompting."
 
 **Key differentiators:**
 1. Structured tools across editing, planning, analysis, audio, effects, Hyperframes rendering, and local repurposing
-2. Cinematic pre-production with style packs, storyboards, and shot-prompt expansion
+2. CARCKHÉtic pre-production with style packs, storyboards, and shot-prompt expansion
 3. Progress callbacks for long FFmpeg operations
 4. Auto-fix error handling that turns FFmpeg failures into actionable fixes
 5. Visual verification with thumbnails, storyboards, and release checkpoints
@@ -47,11 +47,11 @@ No FFmpeg flags to memorize. No cloud API to pay for. Your video never leaves yo
 
 What makes mcp-video different from the 20+ other video MCP servers:
 
-Structured tools — editing, analysis, audio, effects, cinematic planning, Hyperframes rendering, and repurposing packages
+Structured tools — editing, analysis, audio, effects, cARCKHÉtic planning, Hyperframes rendering, and repurposing packages
 Progress callbacks — FFmpeg stderr parsed into real-time percentage
 Auto-fix errors — "Codec error: vp9" → "Auto-convert from vp9 to H.264/AAC"
 Visual verification — thumbnails, storyboards, and release checkpoints
-Cinematic planning — style packs, storyboard tables, and shot prompts before generation
+CARCKHÉtic planning — style packs, storyboard tables, and shot prompts before generation
 
 ---
 
@@ -104,13 +104,13 @@ If you build with MCP, I'd love to hear what tools you need.
 
 **Body:**
 
-mcp-video is an open-source MCP server that wraps FFmpeg, cinematic planning helpers, Hyperframes, and local repurposing into structured tools for agents:
+mcp-video is an open-source MCP server that wraps FFmpeg, cARCKHÉtic planning helpers, Hyperframes, and local repurposing into structured tools for agents:
 
 - **Progress callbacks** — parses FFmpeg stderr in real-time, returns percentage (0-100) to the agent
 - **Auto-fix error handling** — parses FFmpeg errors into structured responses with actionable suggestions ("Codec error: vp9" → "Auto-convert from vp9 to H.264/AAC")
 - **Visual verification** — returns a base64 thumbnail of the first frame after every operation, so agents can confirm results
 - **Timeline DSL** — declarative multi-track edits (video + audio + text + transitions) in a single JSON object
-- **Cinematic pre-production** — PUSHING CREATION-compatible style packs, storyboards, and shot-prompt expansion
+- **CARCKHÉtic pre-production** — PUSHING CREATION-compatible style packs, storyboards, and shot-prompt expansion
 - **Hyperframes authoring** — project scaffolds, renders, snapshots, layout inspection, catalog blocks, capture, local TTS, transcription, background removal, diagnostics, and benchmarks
 - **Local repurposing** — platform variants with manifests, thumbnails, storyboards, and release-checkpoint artifacts
 - **5 platform templates** — TikTok, YouTube Shorts, Instagram Reel, YouTube, Instagram Post
@@ -152,13 +152,13 @@ GitHub: https://github.com/KyaniteLabs/mcp-video
 Hey everyone. I built mcp-video because I wanted agents to edit video through structured operations instead of fragile one-off FFmpeg commands.
 
 mcp-video gives agents:
-- Structured tools for editing, analysis, effects, audio, cinematic planning, Hyperframes rendering, and repurposing packages
+- Structured tools for editing, analysis, effects, audio, cARCKHÉtic planning, Hyperframes rendering, and repurposing packages
 - Real-time progress callbacks (parses FFmpeg stderr)
 - Auto-fix error handling (structured errors with suggested actions)
 - Visual verification (thumbnail returned after every operation)
 - Timeline DSL for complex multi-track edits
 - 5 platform templates (TikTok, YouTube Shorts, etc.)
-- Cinematic pre-production tools for style packs, storyboards, and shot prompts
+- CARCKHÉtic pre-production tools for style packs, storyboards, and shot prompts
 - Hyperframes tools for snapshots, inspection, catalog blocks, capture, TTS, transcription, background removal, diagnostics, and benchmarks
 - Repurposing tools for local Shorts, Reels, TikTok, and YouTube-style packages
 - 3 interfaces: MCP server, Python client, CLI
@@ -199,7 +199,7 @@ mcp-video is an MCP server with local video editing and creation tools:
 
 2. **Visual verification** — After every operation, mcp-video returns a thumbnail of the first frame. You can confirm the result looks right without opening the file.
 
-3. **Cinematic planning** — Style packs, storyboard tables, and shot prompts help plan generated video before rendering.
+3. **CARCKHÉtic planning** — Style packs, storyboard tables, and shot prompts help plan generated video before rendering.
 
 4. **Auto-fix errors** — When FFmpeg fails, mcp-video parses the error and suggests a fix. "Codec error: vp9" → "Auto-convert from vp9 to H.264/AAC".
 
@@ -230,14 +230,14 @@ https://github.com/KyaniteLabs/mcp-video
 
 Built an MCP server for local video editing and planning. The goal is to give agents structured media operations instead of raw shell-command improvisation.
 
-Structured tools that wrap FFmpeg, cinematic planning helpers, Hyperframes, and local repurposing into a clean API for AI agents. Works with Claude Code, Cursor, and any MCP-compatible client.
+Structured tools that wrap FFmpeg, cARCKHÉtic planning helpers, Hyperframes, and local repurposing into a clean API for AI agents. Works with Claude Code, Cursor, and any MCP-compatible client.
 
 What's different:
 - Progress callbacks (real-time FFmpeg stderr parsing)
 - Auto-fix error handling (structured errors with suggested actions)
 - Visual verification (thumbnail returned after operations)
 - Timeline DSL for complex multi-track edits
-- Cinematic pre-production tools for style packs, storyboards, and shot prompts
+- CARCKHÉtic pre-production tools for style packs, storyboards, and shot prompts
 - Hyperframes tools for renders, snapshots, inspection, catalog blocks, capture, local TTS, transcription, background removal, diagnostics, and benchmarks
 - Repurposing tools for platform-ready local packages
 - Python client and CLI
@@ -254,7 +254,7 @@ https://github.com/KyaniteLabs/mcp-video
 
 Hey [Name], I saw you've been building with MCP and thought you might be interested — I just shipped mcp-video, an open-source video editing MCP server.
 
-Structured tools (trim, merge, text, audio, resize, crop, rotate, fade, convert, cinematic style packs/storyboards, Hyperframes render/inspect/capture/TTS/background removal, repurposing packages, and more) that work with Claude Code, Cursor, etc. The useful part is that agents get structured operations, progress callbacks, visual review artifacts, and actionable FFmpeg errors.
+Structured tools (trim, merge, text, audio, resize, crop, rotate, fade, convert, cARCKHÉtic style packs/storyboards, Hyperframes render/inspect/capture/TTS/background removal, repurposing packages, and more) that work with Claude Code, Cursor, etc. The useful part is that agents get structured operations, progress callbacks, visual review artifacts, and actionable FFmpeg errors.
 
 Would love your feedback if you get a chance to try it. What video editing capabilities would be most useful in your workflows?
 
@@ -272,7 +272,7 @@ Would you be interested in beta testing? Looking for people who edit video regul
 
 Hey [Name], been following your work on [their project]. I just built mcp-video — an MCP server for video editing.
 
-The architecture is: MCP server wrapping FFmpeg, cinematic planning helpers, Hyperframes, and local repurposing, with a Python client and CLI. Structured operations, progress callbacks, auto-fix errors, visual review artifacts, Apache 2.0.
+The architecture is: MCP server wrapping FFmpeg, cARCKHÉtic planning helpers, Hyperframes, and local repurposing, with a Python client and CLI. Structured operations, progress callbacks, auto-fix errors, visual review artifacts, Apache 2.0.
 
 Curious if you've thought about adding video capabilities to [their project]? Would be happy to collaborate or share what I've learned about the MCP tool-building patterns.
 
